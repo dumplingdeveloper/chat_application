@@ -1,3 +1,5 @@
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
 #include "proto/chat.grpc.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <iostream>
@@ -8,8 +10,12 @@ using chat::ChatService;
 using grpc::ClientContext;
 using grpc::ClientReaderWriter;
 
+ABSL_FLAG(std::string, server_address, "localhost:50051", "Server address");
+ABSL_FLAG(std::string, user_name, "anonymous", "User name");
+
 int main(int argc, char **argv) {
-  auto channel = grpc::CreateChannel("localhost:50051",
+  absl::ParseCommandLine(argc, argv);
+  auto channel = grpc::CreateChannel(absl::GetFlag(FLAGS_server_address),
                                      grpc::InsecureChannelCredentials());
   std::unique_ptr<ChatService::Stub> stub = ChatService::NewStub(channel);
 
@@ -25,7 +31,7 @@ int main(int argc, char **argv) {
   });
 
   ChatMessage msg;
-  msg.set_user("me");
+  msg.set_user(absl::GetFlag(FLAGS_user_name));
   while (true) {
     std::string text;
     std::getline(std::cin, text);
