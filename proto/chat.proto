@@ -12,3 +12,12 @@ message ChatMessage {
 service ChatService {
   rpc Chat(stream ChatMessage) returns (stream ChatMessage);
 }
+
+service TranslatorService {
+  rpc Translate(ChatText) returns (ChatText);
+}
+
+message ChatText {
+  string text = 1;
+  string target_language = 2;
+}
