@@ -82,7 +82,7 @@ private:
 class ChatServiceImpl final : public ChatService::CallbackService {
 public:
   grpc::ServerBidiReactor<ChatMessage, ChatMessage> *
-  Chat(CallbackServerContext *context) override { // Corrected context type
+  Chat(CallbackServerContext *context) override {
     auto *session = new ChatSession();
     {
       std::lock_guard<std::mutex> lock(g_mu);

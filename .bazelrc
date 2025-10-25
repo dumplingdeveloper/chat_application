@@ -1,0 +1,6 @@
+# Use C++17 standard by default
+build --cxxopt=-std=c++17
+
+# Set minimum macOS deployment target to 10.13 for aligned allocations
+build --action_env=MACOSX_DEPLOYMENT_TARGET=10.13
+build --macos_minimum_os=10.13
