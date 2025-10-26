@@ -12,6 +12,7 @@ using grpc::ClientReaderWriter;
 
 ABSL_FLAG(std::string, server_address, "localhost:50051", "Server address");
 ABSL_FLAG(std::string, user_name, "anonymous", "User name");
+ABSL_FLAG(std::string, group_name, "general", "Chat group name");
 
 int main(int argc, char **argv) {
   absl::ParseCommandLine(argc, argv);
@@ -32,6 +33,7 @@ int main(int argc, char **argv) {
 
   ChatMessage msg;
   msg.set_user(absl::GetFlag(FLAGS_user_name));
+    msg.set_group_name(absl::GetFlag(FLAGS_group_name));
   while (true) {
     std::string text;
     std::getline(std::cin, text);
